@@ -10,6 +10,7 @@
   "author": "Yaohan Chen <yaohan.chen@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.18.0",
     "coffee-script": "^1.8.0",
     "express": "^4.10.6",
     "sync-request": "^1.0.1",
