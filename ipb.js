@@ -20,7 +20,7 @@ exports.page = function(url) {
             if(date.valueOf()) {
               return dateString;
             } else {
-              postingDate;
+              return postingDate;
             }
           }
         }
