@@ -47,7 +47,7 @@ processPage = (url) ->
                 source:
                   post: post.url
                   author: post.author
-                  lastUpdate: post.editingDate()
+                  lastUpdated: post.editingDate()
               )
 
   nextPage = parsedPage.nextPage()
