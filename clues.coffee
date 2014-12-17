@@ -57,6 +57,8 @@ processPage = (url) ->
     finish 0
 
 finish = (status) ->
+  outputData = []
+
   # Fix some typos
   fixes =
     'alchemists sign': 'Alchemist sign'
@@ -104,6 +106,7 @@ finish = (status) ->
   console.log "Extracted #{outputData.length} clues"
 
 module.exports = ->
+  data = []
   processPage 'http://impsvillage.com/forums/topic/141320-treasure-hunting-the-guide/'
   outputData
 
