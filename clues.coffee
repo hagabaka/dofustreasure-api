@@ -46,6 +46,7 @@ processPage = (url) ->
                 image: img.attr('src')
                 source:
                   post: post.url
+                  author: post.author
                   lastUpdate: post.editingDate()
               )
 
