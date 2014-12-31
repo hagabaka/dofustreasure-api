@@ -8,7 +8,7 @@ exports.page = function(url) {
   return {
     posts: function() {
       return $('.post_block').map(function() {
-        postingDate = $(this).find('[itemprop=commentTime]').attr('title');
+        var postingDate = $(this).find('[itemprop=commentTime]').attr('title');
         return {
           author: $(this).find('.author_info [itemprop=name]').text(),
           body: $(this).find('[itemprop=commentText]'),
