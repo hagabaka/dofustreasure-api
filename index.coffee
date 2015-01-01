@@ -10,11 +10,16 @@ app.use (request, response, next) ->
 
 data = clues()
 setInterval ->
-  data = clues()
+  newData = clues()
+  if newData
+    data = newData
 , 1800000
 
 app.get '/', (request, response) ->
-  response.send data
+  if data
+    response.send data
+  else
+    response.status(502).json({error: 'Error connecting to ImpsVillage'})
 
 app.listen app.get('port'), ->
   console.log "Node app is running at localhost:#{app.get('port')}"

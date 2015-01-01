@@ -107,6 +107,10 @@ finish = (status) ->
 
 module.exports = ->
   data = []
-  processPage 'http://impsvillage.com/forums/topic/141320-treasure-hunting-the-guide/'
+  try
+    processPage 'http://impsvillage.com/forums/topic/141320-treasure-hunting-the-guide/'
+  catch exception
+    console.log exception
+    return null
   outputData
 
