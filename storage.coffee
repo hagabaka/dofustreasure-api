@@ -8,7 +8,7 @@ unless client.stats()
       callback data
       data
     set: (_, value, callback) ->
-      data = vale
+      data = value
       callback data
       data
   exports.get = client.get
@@ -20,5 +20,5 @@ exports.get = (callback) ->
     callback JSON.parse(string)
 
 exports.set = (data, callback) ->
-  client.set 'data', JSON.stringify(data)
+  client.set 'data', JSON.stringify(data), callback || ->
 
