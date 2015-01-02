@@ -10,6 +10,7 @@ app.use (request, response, next) ->
   next()
 
 data = clues()
+storage.set data
 
 unless data
   storage.get (storedData) ->
