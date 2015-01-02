@@ -3,10 +3,14 @@ memjs = require 'memjs'
 client = memjs.Client.create()
 unless client.stats()
   data = null
-  giveData = (key, callback) -> callback data
   client =
-    get: giveData
-    set: giveData
+    get: (_, callback) ->
+      callback data
+      data
+    set: (_, value, callback) ->
+      data = vale
+      callback data
+      data
   exports.get = client.get
   exports.set = client.set
 else
