@@ -13,7 +13,7 @@
     "cheerio": "^0.18.0",
     "coffee-script": "^1.8.0",
     "express": "^4.10.6",
-    "memjs": "^0.8.5",
+    "redis": "^0.12.1",
     "sync-request": "^1.0.1",
     "underscore": "^1.7.0"
   }
