@@ -10,6 +10,7 @@ app.use (request, response, next) ->
   next()
 
 data = clues()
+
 unless data
   storage.get (storedData) ->
     data = data || storedData
@@ -17,7 +18,7 @@ unless data
 setInterval ->
   newData = clues()
   if newData
-    storage.set JSON.stringify(data)
+    storage.set data
     data = newData
 , 1800000
 

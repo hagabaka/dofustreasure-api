@@ -16,8 +16,9 @@ unless client.stats()
 else
 
 exports.get = (callback) ->
-  client.get 'data', callback
+  client.get 'data', (string) ->
+    callback JSON.parse(string)
 
 exports.set = (data, callback) ->
-  client.set 'data', data, callback
+  client.set 'data', JSON.stringify(data)
 
