@@ -1,8 +1,8 @@
 var cheerio = require('cheerio');
-var request = require('sync-request');
+var get = require('./request-fallback-to-cached');
 
 exports.page = function(url) {
-  var content = request('GET', url).getBody().toString();
+  var content = get(url);
 
   var $ = cheerio.load(content);
   return {
