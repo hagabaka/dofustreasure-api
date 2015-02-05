@@ -19,7 +19,7 @@ unless data
 setInterval ->
   newData = clues()
   if newData
-    storage.set data
+    storage.set newData
     data = newData
 , 1800000
 
