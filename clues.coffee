@@ -11,50 +11,50 @@ outputData = []
 processPage = (url) ->
   console.log "Processing page #{url}"
 
-  parsedPage = page(url)
-  parsedPage.posts().forEach (post) ->
-    postBlock = post.body
-    postBlock.add(postBlock.find('*')).replaceText /.+/, (text) ->
-      if text isnt 'Spoiler' and not /^\s*$/.test(text)
-        "<span class='possible_clue'>#{text}</span>"
-      else
-        ''
+  page(url).then (parsedPage) ->
+    parsedPage.posts().forEach (post) ->
+      postBlock = post.body
+      postBlock.add(postBlock.find('*')).replaceText /.+/, (text) ->
+        if text isnt 'Spoiler' and not /^\s*$/.test(text)
+          "<span class='possible_clue'>#{text}</span>"
+        else
+          ''
 
-    textBlocksAndImages = postBlock.find('span.possible_clue, img.bbc_img')
-    textBlocksAndImages.each (index, element) ->
-      if element.tagName is 'img'
-        img = $(element)
-        clue = null
-        if index > 0
-          previous = (textBlocksAndImages)[0 .. index - 1].toArray().reverse()
-          clueElement = _(previous).find (predecessor) -> predecessor.tagName is 'span'
-          if clueElement
-            text = $(clueElement).text().trim()
-            # Clues are at most 9 words long, must start with letters, and can only contain
-            # letters, whitespace, dash apostrophe, double quotes, parentheses, comma, slash,
-            # and colon. An entire clue wrapped by '~ ... ~' is also accepted.
-            letter = 'a-zA-Z\u00C0-\u017F'
-            phrase = ///[ #{letter} ] [ - #{letter} \s ' " ( ) , : / ]+///.source
-            if ///
-                ^ ~ \s+ #{phrase} \s+ ~ $ |
-                ^     " #{phrase} "     $ |
-                ^       #{phrase}       $
-               ///.test(text) and text.split(/\s+/).length <= 9
+      textBlocksAndImages = postBlock.find('span.possible_clue, img')
+      textBlocksAndImages.each (index, element) ->
+        if element.tagName is 'img'
+          img = $(element)
+          clue = null
+          if index > 0
+            previous = (textBlocksAndImages)[0 .. index - 1].toArray().reverse()
+            clueElement = _(previous).find (predecessor) -> predecessor.tagName is 'span'
+            if clueElement
+              text = $(clueElement).text().trim()
+              # Clues are at most 9 words long, must start with letters, and can only contain
+              # letters, whitespace, dash apostrophe, double quotes, parentheses, comma, slash,
+              # and colon. An entire clue wrapped by '~ ... ~' is also accepted.
+              letter = 'a-zA-Z\u00C0-\u017F'
+              phrase = ///[ #{letter} ] [ - #{letter} \s ' " ( ) , : / ]+///.source
+              if ///
+                  ^ ~ \s+ #{phrase} \s+ ~ $ |
+                  ^     " #{phrase} "     $ |
+                  ^       #{phrase}       $
+                 ///.test(text) and text.split(/\s+/).length <= 9
 
-              data.push(
-                clue: text
-                image: img.attr('src')
-                source:
-                  post: post.url
-                  author: post.author
-                  lastUpdated: post.editingDate()
-              )
+                data.push(
+                  clue: text
+                  image: img.attr('src')
+                  source:
+                    post: post.url
+                    author: post.author
+                    lastUpdated: post.editingDate()
+                )
 
-  nextPage = parsedPage.nextPage()
-  if nextPage
-    processPage nextPage
-  else
-    finish 0
+    nextPage = parsedPage.nextPage()
+    if nextPage
+      processPage nextPage
+    else
+      finish 0
 
 finish = (status) ->
   outputData = []
@@ -104,13 +104,11 @@ finish = (status) ->
   outputData = _(outputData).sortBy (entry) ->
     entry.clue.toLowerCase()
   console.log "Extracted #{outputData.length} clues"
+  outputData
 
 module.exports = ->
   data = []
-  try
-    processPage 'http://impsvillage.com/forums/topic/141320-treasure-hunting-the-guide/'
-  catch exception
+  processPage('http://impsvillage.com/forums/topic/141320-treasure-hunting-the-guide/').catch (exception) ->
     console.log exception
-    return null
-  outputData
+    null
 

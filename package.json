@@ -14,7 +14,7 @@
     "coffee-script": "^1.8.0",
     "express": "^4.10.6",
     "redis": "^0.12.1",
-    "sync-request": "^1.0.1",
+    "then-request": "^2.2.0",
     "underscore": "^1.7.0"
   }
 }

@@ -9,19 +9,22 @@ app.use (request, response, next) ->
   response.setHeader 'Access-Control-Allow-Origin', '*'
   next()
 
-data = clues()
-if data
-  storage.set data
+data = null
+
+clues().then (newData) ->
+  if newData
+    data = newData
+    storage.set data
 
 unless data
   storage.get (storedData) ->
     data = data || storedData
 
 setInterval ->
-  newData = clues()
-  if newData
-    storage.set newData
-    data = newData
+  clues().then (newData) ->
+    if newData
+      data = newData
+      storage.set data
 , 1800000
 
 app.get '/', (request, response) ->

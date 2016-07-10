@@ -28,7 +28,11 @@ exports.page = function(url) {
         return $('.ipsPagination_prev a').attr('href');
       },
       nextPage: function() {
-        return $('.ipsPagination_next a').attr('href');
+        var nextPageUrl = $('.ipsPagination_next a').attr('href');
+        if(nextPageUrl === url) {
+          return null;
+        }
+        return nextPageUrl;
       },
       firstPage: function() {
         return $('.ipsPagination_first a').attr('href') || url;
