@@ -11,7 +11,7 @@ exports.page = function(url) {
           return {
             author: $(this).find('.cAuthorPane_author [itemprop=name] a').text(),
             body: $(this).find('[itemprop=text]'),
-            url: $('a[data-roll="shareComment"]').attr('href'),
+            url: $(this).find('a[data-role=shareComment]').attr('href'),
             postingDate: postingDate,
             editingDate: function() {
               var dateString = $(this).find('strong > time').attr('datetime');
